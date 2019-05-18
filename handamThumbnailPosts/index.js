@@ -84,16 +84,21 @@ exports.handler = async (event) => {
 
     try { // Get the image from S3, transform, and upload to a different S3 bucket.
         const response = await s3.getObject({ Bucket, Key }).promise();
+        const s3d = s3.deleteObject({ Bucket, Key }).promise();
         const {ContentType} = response;
+        
+        let s3pPng;
         if(imageType === 'gif') {
             await saveFirstFrame(response, fileName);
             const Body = await transformGIF(fileName, imageType, response);
-            await s3.putObject({ Bucket, Key: `resized-${key}.png`, Body, ContentType }).promise();
+            s3pPng = s3.putObject({ Bucket, Key: `resized-${key}.png`, Body, ContentType }).promise();
         }
         const Body = await transform(imageType, response);
         const s3p = s3.putObject({ Bucket, Key: `${resizedKey}`, Body, ContentType }).promise(); 
-        const s3d = s3.deleteObject({ Bucket, Key }).promise();
 
+        if(imageType === 'gif') {
+            await s3pPng;
+        }
         await s3p; await s3d;
 
         console.log(`Successfully resized${Bucket}/${Key} and uploaded to ${Bucket}/${resizedKey}`);
