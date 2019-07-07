@@ -165,6 +165,4 @@ Serverless: Stack removal finished...
 
 #### Reference
 
-<https://www.codelabs.kr/course/lecture?no=3&lecture_no=128>
-
-<https://www.codelabs.kr/course/lecture?no=3&lecture_no=129>
+<https://github.com/novemberde/serverless-todo-demo>
