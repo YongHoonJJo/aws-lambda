@@ -1,0 +1,33 @@
+{
+  "name": "serverless-nodejs-starter",
+  "version": "1.1.0",
+  "description": "A Node.js starter for the Serverless Framework with async/await and unit test support",
+  "main": "handler.js",
+  "scripts": {
+    "test": "serverless-bundle test",
+    "mock:create": "npx serverless invoke local --function create --path mocks/create-event.json",
+    "mock:get": "npx serverless invoke local --function get --path mocks/get-event.json",
+    "mock:list": "npx serverless invoke local --function list --path mocks/list-event.json",
+    "mock:update": "npx serverless invoke local --function update --path mocks/update-event.json",
+    "mock:delete": "npx serverless invoke local --function delete --path mocks/delete-event.json",
+    "mock:billing": "npx serverless invoke local --function billing --path mocks/billing-event.json"
+  },
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AnomalyInnovations/serverless-nodejs-starter.git"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.536.0",
+    "jest": "^24.9.0",
+    "serverless": "^1.60.1",
+    "serverless-bundle": "^1.2.2",
+    "serverless-dotenv-plugin": "^2.1.1",
+    "serverless-offline": "^5.3.3"
+  },
+  "dependencies": {
+    "stripe": "^7.9.1",
+    "uuid": "^3.3.3"
+  }
+}
