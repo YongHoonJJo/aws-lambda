@@ -14,6 +14,7 @@ export default function Login(props) {
   });
 
   function validateForm() {
+    const { email, password } = fields
     return email.length > 0 && password.length > 0;
   }
 
@@ -32,7 +33,7 @@ export default function Login(props) {
     }
   }
 
-  rreturn (
+  return (
     <div className="Login">
       <form onSubmit={handleSubmit}>
         <FormGroup controlId="email" bsSize="large">
