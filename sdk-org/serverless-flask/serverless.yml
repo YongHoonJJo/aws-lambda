@@ -1,0 +1,40 @@
+service: serverless-flask # 람다 이름
+
+plugins:
+  - serverless-python-requirements
+  - serverless-wsgi
+
+custom:
+  wsgi:
+    app: app.app # 메인 엔트리
+    packRequirements: false
+  pythonRequirements:
+    dockerizeZip: non-linux
+
+provider:
+  name: aws
+  runtime: python3.6
+  stage: dev
+  region: ap-northeast-2
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - lambda:invokeFunction
+      Resource: "*"
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+      Resource: "arn:aws:s3:::word-vector-text/*"
+    - Effect: Allow
+      Action:
+        - s3:GetObject
+      Resource: "arn:aws:s3:::word-vector-text-acc/*"
+  environment:  
+    NLTK_DATA: './nltk_data'
+
+functions:
+  app:
+    handler: wsgi_handler.handler 
+    events:
+      - http: ANY /
+      - http: 'ANY {proxy+}'

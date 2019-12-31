@@ -168,3 +168,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# serverless packages
+.serverless/
