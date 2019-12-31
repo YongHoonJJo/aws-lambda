@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 
+import { baseURL } from '../apis/api'
+
 const WordVector = () => {
   const [selectedFile, setSelectedFile] = useState(null)
   const [vectors, setVectors] = useState('')
@@ -14,7 +16,7 @@ const WordVector = () => {
     const formData = new FormData()
     formData.append('file', selectedFile)
     try {
-      const { data } = await axios.post('https://bay5vbs1r4.execute-api.ap-northeast-2.amazonaws.com/dev/wordVector', formData)
+      const { data } = await axios.post(`${baseURL}/wordVector`, formData)
       // setVectors(JSON.parse(data))
       console.log({data})
       setVectors(data)

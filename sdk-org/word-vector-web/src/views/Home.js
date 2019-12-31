@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Button from '@material-ui/core/Button'
 
 import axios from 'axios'
+import { baseURL } from '../apis/api'
 
 const Home = () => {
   const [state, setState] = useState('')
@@ -10,7 +11,7 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get('https://bay5vbs1r4.execute-api.ap-northeast-2.amazonaws.com/dev')
+        const { data } = await axios.get(baseURL)
         console.log({data})
         setState(data)
       } catch(e) {

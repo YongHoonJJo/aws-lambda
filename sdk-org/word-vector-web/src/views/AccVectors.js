@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 
+import { baseURL } from '../apis/api'
+
 const AccVectors = () => {
   const [vectors, setVectors] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get('https://bay5vbs1r4.execute-api.ap-northeast-2.amazonaws.com/dev/getAccVector')
+        const { data } = await axios.get(`${baseURL}/getAccVector`)
         setVectors(data)
       } catch(e) {
         console.log({e})
