@@ -10,7 +10,11 @@ const SelectCloud = () => {
       try {
         const { data } = await axios.post(
           `https://4wfmtwdd9b.execute-api.ap-northeast-2.amazonaws.com/dev/dormitory`, 
-          qs.stringify({ id, pw })
+          qs.stringify({ id, pw }), {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+          }
         )
       } catch(e) {
         console.log({e})
