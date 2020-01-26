@@ -4,40 +4,30 @@ import Button from '@material-ui/core/Button'
 import axios from 'axios'
 import { baseURL } from '../apis/api'
 
-const Home = () => {
-  const [state, setState] = useState('')
-  const [test, setTest] = useState('')
+const Home = ({history}) => {
+  // const [state, setState] = useState('')
+  // const [test, setTest] = useState('')
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await axios.get(baseURL)
-        console.log({data})
-        setState(data)
-      } catch(e) {
-        console.log({e})
-      }
-    }
-    fetchData()
-  }, [])
-
-  const onClickHandler = () => {
-    const obj = {
-      a: [1, 2, 3],
-      b: [2, 3, 4]
-    }
-    console.log(obj)
-    console.log(JSON.parse(JSON.stringify(obj)))
-    setTest(obj)
-  }
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const { data } = await axios.get(baseURL)
+  //       console.log({data})
+  //       setState(data)
+  //     } catch(e) {
+  //       console.log({e})
+  //     }
+  //   }
+  //   fetchData()
+  // }, [])
 
   return (
     <React.Fragment>
-      <Button variant="contained" color="primary" onClick={onClickHandler}>
-        Hello World
-      </Button> 
-      {state && <h1>{state}</h1>}
-      {test && <div>{test}</div>}
+      <a href='http://13.209.123.84:50000/'>
+        <Button variant="contained" color="primary" >
+          Move to Web NLP Tools
+        </Button> 
+      </a>
     </React.Fragment>
   )
 }
