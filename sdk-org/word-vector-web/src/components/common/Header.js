@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const HeaderComponent = () => (
   <Header>
-    <Title>sdkim-org</Title>
+    <Title>ksd-hsmt</Title>
     <Menu>
       <Item exact to="/">Home</Item>
       <Item to="/selectCloud">Select Cloud</Item>

@@ -22,5 +22,6 @@ const Wrap = styled.div`
 
 const Container = styled.div`
   width: 1024px;
+  height: 100%;
   margin: 0 auto;
 `;
