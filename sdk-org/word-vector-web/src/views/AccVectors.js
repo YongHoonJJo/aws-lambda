@@ -5,12 +5,14 @@ import styled from 'styled-components'
 import { baseURL } from '../apis/api'
 
 const AccVectors = () => {
+  const [loading, setLoading] = useState(true)
   const [vectors, setVectors] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const { data } = await axios.get(`${baseURL}/getAccVector`)
+        setLoading(false)
         setVectors(data)
       } catch(e) {
         console.log({e})
@@ -25,6 +27,10 @@ const AccVectors = () => {
         return false
     return true
   }
+
+  if(loading) return (
+    <div>Loading...</div>
+  )
 
   return (
     <div>

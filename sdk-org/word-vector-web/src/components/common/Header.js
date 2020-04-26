@@ -6,10 +6,11 @@ const HeaderComponent = () => (
   <Header>
     <Title>ksd-hsmt</Title>
     <Menu>
-      <Item exact to="/">Home</Item>
+      <Item exact to="/">Wep NLP Tools</Item>
       <Item to="/selectCloud">Select Cloud</Item>
       <Item to="/wordVector">Word Vector</Item>
       <Item to="/accVectors">Acc Vectors</Item>
+      <Item to="/SearchRules">Search Rules</Item>
     </Menu>
   </Header>
 );

@@ -19,6 +19,7 @@ const Wrap = styled.div`
 const Label = styled.label`
   font-size: 12px;
   padding-right: 10px;
+  font-weight: bold;
 `
 
 const InputStyle = styled.input`

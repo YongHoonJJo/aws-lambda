@@ -8,14 +8,14 @@ const SelectCloud = () => {
     const pw = 'qwer1234!@'
     const fetchData = async () => {
       try {
-        const { data } = await axios.post(
-          `https://4wfmtwdd9b.execute-api.ap-northeast-2.amazonaws.com/dev/dormitory`, 
-          qs.stringify({ id, pw }), {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-          }
-        )
+        // const { data } = await axios.post(
+        //   `https://4wfmtwdd9b.execute-api.ap-northeast-2.amazonaws.com/dev/dormitory`, 
+        //   qs.stringify({ id, pw }), {
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     }
+        //   }
+        // )
       } catch(e) {
         console.log({e})
       }

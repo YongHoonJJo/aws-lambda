@@ -8,6 +8,7 @@ import HomeView from './views/Home'
 import SelectCloudView from './views/SelectCloud';
 import WordVectorView from './views/WordVector'
 import AccVectorsView from './views/AccVectors'
+import SearchRulesView from './views/SearchRules';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/selectCloud" component={SelectCloudView} />
             <Route path="/wordVector" component={WordVectorView} />
             <Route path="/accVectors" component={AccVectorsView} />
+            <Route path="/searchRules" component={SearchRulesView} />
             <Redirect to="/" />
           </Switch>
         </Layout>

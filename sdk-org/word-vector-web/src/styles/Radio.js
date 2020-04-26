@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const Radio = ({label, name, currentValue, options, onChange}) => {
   return (
     <Wrap>
-      <Label>{label}</Label>
+      <Label title="true">{label}</Label>
       {options.map(({value, label}) => (
         <React.Fragment key={label}>
           <RadioStyle type="radio"
@@ -26,8 +26,9 @@ const Wrap = styled.div`
 `
 
 const Label = styled.label`
-  font-size: 12px;
+  font-size: 18px;
   padding-right: 10px;
+  font-weight: ${({title}) => title ? 'bold' : 'unset'};
 `
 
 const RadioStyle = styled.input`
