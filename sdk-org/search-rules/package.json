@@ -1,0 +1,12 @@
+{
+  "name": "rule-compiler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "deploy": "npx serverless deploy --aws-profile sdk-org"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

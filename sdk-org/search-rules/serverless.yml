@@ -1,0 +1,16 @@
+service: rule-compiler
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: ap-northeast-2
+  
+functions:
+  list:
+    handler: handler.main
+    events:
+      - http:
+          path: getRules/{filename}
+          method: get
+          cors: true
