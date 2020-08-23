@@ -9,6 +9,8 @@ import { ruleCompilerURL } from '../apis/api'
 import { createParseRule_ID, createParseRule } from './ruleCompiler/rnameN-h'
 import { createRuleNameTableElem } from './ruleCompiler/rnameN-cpp'
 import { createRuleN_CPP } from './ruleCompiler/ruleN-cpp'
+import { createApplyN_CPP } from './ruleCompiler/applyN-cpp'
+import { createRuleN_Proto_h } from './ruleCompiler/ruleN-proto-h'
 
 const SearchRules = () => {
   const [rules, setRules] = useState({})
@@ -109,6 +111,8 @@ const SearchRules = () => {
         setRules(data)
         // console.log({data})
         // createRuleN_CPP(results[0].data, 'N-rule1')
+        // createApplyN_CPP(results[0].data, 'N-rule1')
+        // createRuleN_Proto_h(results[0].data, 'N-rule1')
       } catch(e) {
         console.log({e})
       }
