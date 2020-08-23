@@ -18,6 +18,8 @@ const Wrap = styled.div`
   height: 100%;
   padding: 60px 10px 10px;
   background-color: #f5f5f5;
+  // background: #000000;
+  // color: #FFFFFF;
 `;
 
 const Container = styled.div`

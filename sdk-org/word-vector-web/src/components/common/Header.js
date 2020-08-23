@@ -6,7 +6,7 @@ const HeaderComponent = () => (
   <Header>
     <Title>ksd-hsmt</Title>
     <Menu>
-      <Item exact to="/">Wep NLP Tools</Item>
+      <Item exact to="/">Web NLP Tools</Item>
       <Item to="/selectCloud">Select Cloud</Item>
       <Item to="/wordVector">Word Vector</Item>
       <Item to="/accVectors">Acc Vectors</Item>

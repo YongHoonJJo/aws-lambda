@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import axios from 'axios'
 import qs from 'querystring'
+import styled from "styled-components";
 
 const SelectCloud = () => {
   useEffect(() => {
@@ -16,6 +17,8 @@ const SelectCloud = () => {
         //     }
         //   }
         // )
+
+        //
       } catch(e) {
         console.log({e})
       }
@@ -23,10 +26,21 @@ const SelectCloud = () => {
     fetchData()
   }, [])
   return (
-    <div>
-      Select Cloud
-    </div>
+    <Wrap>
+      <Iframe src='https://4zlfs615gc.execute-api.ap-northeast-2.amazonaws.com/dev/' />
+    </Wrap>
   )
 }
 
 export default SelectCloud
+
+const Wrap = styled.div`
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+`
+
+const Iframe = styled.iframe`
+  width: 100%;
+  height: 100%;
+`
