@@ -1,16 +1,18 @@
 import {createRule} from "./ruleN-cpp";
 
 const ParseRuleID = (rule, enumS, idx) => {
+  // console.log(`ParseRuleID ${idx}`)
   if(!rule) return
 
   const { ruleID, RHSs } = rule
   const ruleIdL = ruleID.toLowerCase()
-  const ret = RHSs.map(r => `${idx === 0 ? '\t' : ''}${ruleIdL}${r.toLowerCase()}${idx === 0 ? `=${enumS}` : ''}`)
+  const ret = RHSs.map((r, i) => `${idx === 0 && i === 0 ? '\t' : ''}${ruleIdL}${r.toLowerCase()}${idx === 0 && i === 0 ? `=${enumS}` : ''}`)
 
   return [...ret, ruleIdL, '']
 }
 
 const parseRuleIDs = (rules, enumS) => {
+
   const keys = Object.keys(rules)
   const res = keys.map((k, idx) => ParseRuleID(rules[k], enumS, idx))
   const cnt = res.reduce((a, b) => a + b.length, 0) - res.length
@@ -22,7 +24,7 @@ export const createParseRule = (rules, fname='rule', num=1) => {
 
   const fno = fname.split('rule')[1]
   // const parseRuleID = rules.map(r => createParseRule_ID(r))
-
+  // console.log({fname, fno})
   const enumS = (fno-1)*300
 
   const [cnt, enums] = parseRuleIDs(rules, enumS)

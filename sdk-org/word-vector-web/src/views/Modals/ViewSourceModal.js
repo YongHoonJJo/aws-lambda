@@ -55,10 +55,19 @@ const ViewSourceModal = ({modalFlag, closeModal, targetRule={}, rulesF={}}) => {
     element.click();
   }
 
+  const onCloseModal = () => {
+    setContent('')
+    setRadio({
+      ...radio,
+      currentValue: ''
+    })
+    closeModal()
+  }
+
   return (
     <Wrap modalFlag={modalFlag}>
       <Modal>
-        <Xbtn onClick={closeModal} src={'https://d319d1tzjwpwbb.cloudfront.net/app/images/2020-04-23/208d27637366c16a60deac167ec3b3c4.svg'} />
+        <Xbtn onClick={onCloseModal} src={'https://d319d1tzjwpwbb.cloudfront.net/app/images/2020-04-23/208d27637366c16a60deac167ec3b3c4.svg'} />
         <Title>View Source</Title>
         <SectionBox>
           <InputSection>

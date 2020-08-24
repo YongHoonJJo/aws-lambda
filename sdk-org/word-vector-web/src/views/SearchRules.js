@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import Radio from '../styles/Radio'
 
-import { ruleCompilerURL } from '../apis/api'
+import { ruleCompilerURL, updateRuleURL } from '../apis/api'
 import RuleUpdateModal from "./Modals/RuleUpdateModal";
 import ViewSourceModal from './Modals/ViewSourceModal'
 
@@ -67,8 +67,9 @@ const SearchRules = () => {
     return true
   }
 
-  const onUpdateRuleReq = () => {
-    const { ruleID='', contents='' } = updateRuleInfo
+  const onUpdateRuleReq = async () => {
+    const { ruleID='', contents='', filename='' } = updateRuleInfo
+    console.log({updateRuleInfo})
 
     const data = contents.split(' -> ')
     if(data.length != 2) {
@@ -82,8 +83,18 @@ const SearchRules = () => {
       return ;
     }
 
-    console.log({ruleID, contents})
     // TODO call update api
+    try {
+      const ruleFile = rulesF[filename]
+      ruleFile[ruleID].contents = contents
+      console.log({ruleFile})
+      await axios.put(`${updateRuleURL}/updateRule/${filename}`, ruleFile)
+      await fetchData()
+      closeUpdateRuleModal()
+    } catch(e) {
+      console.log({e})
+      window.alert('Fail to Update')
+    }
   }
 
   const { RHSs, rhs, LHS } = RHSsLHS
@@ -158,7 +169,9 @@ const SearchRules = () => {
 
   const fetchData = async () => {
     const files = [
-      'N-rule1', 'N-rule2', 'N-rule3', 'N-rule4', 'N-rule5',
+      'N-rule1',
+      'N-rule2',
+      'N-rule3', 'N-rule4', 'N-rule5',
       'N-rule6', 'N-rule7', 'N-rule8', 'N-rule9', 'N-rule10',
     ]
     try {
