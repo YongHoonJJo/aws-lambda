@@ -20,4 +20,5 @@ const createRuleNProto = (rules, fno=1, num=1) => {
 export const createRuleN_Proto_h = (rules, fname) => {
   const ruleProto = createRuleNProto(rules, 1)
   // console.log(ruleProto)
+  return ruleProto
 }

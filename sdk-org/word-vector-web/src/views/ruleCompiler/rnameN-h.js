@@ -46,5 +46,6 @@ export const createParseRule = (rules, fname='rule', num=1) => {
     ``
   ].join('\n')
 
-  console.log(ret)
+  // console.log(ret)
+  return ret
 }

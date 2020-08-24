@@ -5,12 +5,8 @@ import axios from 'axios'
 import Radio from '../styles/Radio'
 
 import { ruleCompilerURL } from '../apis/api'
-
-import { createParseRule } from './ruleCompiler/rnameN-h'
-import { createRuleN_CPP } from './ruleCompiler/ruleN-cpp'
-import { createApplyN_CPP } from './ruleCompiler/applyN-cpp'
-import { createRuleN_Proto_h } from './ruleCompiler/ruleN-proto-h'
-import { create_rnameN_cpp } from './ruleCompiler/rnameN-cpp'
+import RuleUpdateModal from "./Modals/RuleUpdateModal";
+import ViewSourceModal from './Modals/ViewSourceModal'
 
 const SearchRules = () => {
   const [rules, setRules] = useState({})
@@ -27,7 +23,69 @@ const SearchRules = () => {
     name: 'Search Rule',
     currentValue: 'RuleID'
   })
-  
+
+  const [rulesF, setRulesF] = useState({})
+  const [updateRuleInfo, setUpdateRuleInfo] = useState({
+    updateModalFlag: false,
+  })
+  const [viewSrcInfo, setViewSrcInfo] = useState({
+    viewSrcModalFlag: false,
+  })
+
+  const closeViewSrcModal = rule => {
+    setViewSrcInfo({
+      viewSrcModalFlag: false,
+    })
+  }
+
+  const openViewSrcModal = rule => {
+    if(!rule) return
+
+    setViewSrcInfo({
+      viewSrcModalFlag: true,
+      ...rule
+    })
+  }
+
+  const openUpdateRuleModal = rule => {
+    if(!rule) return
+
+    setUpdateRuleInfo({
+      updateModalFlag: true,
+      ...rule
+    })
+  }
+
+  const closeUpdateRuleModal = rule => {
+    setUpdateRuleInfo({
+      updateModalFlag: false,
+    })
+  }
+
+  const checkCondition = c => {
+    if(c[c.length-1] !== ')') return false
+    return true
+  }
+
+  const onUpdateRuleReq = () => {
+    const { ruleID='', contents='' } = updateRuleInfo
+
+    const data = contents.split(' -> ')
+    if(data.length != 2) {
+      window.alert('RULE 형식이 잘못되었습니다.')
+      return ;
+    }
+
+    const [lhs, rhss] = data
+    if(!checkCondition(lhs) || !checkCondition(rhss)) {
+      window.alert('RULE 형식이 잘못되었습니다..')
+      return ;
+    }
+
+    console.log({ruleID, contents})
+    // TODO call update api
+  }
+
   const { RHSs, rhs, LHS } = RHSsLHS
   const { currentValue } = radio
 
@@ -98,39 +156,35 @@ const SearchRules = () => {
     }
   }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const files = [
-        'N-rule1', 'N-rule2', 'N-rule3', 'N-rule4', 'N-rule5',
-        'N-rule6', 'N-rule7', 'N-rule8', 'N-rule9', 'N-rule10',
-      ]
-      try {
-        const results = await Promise.all(files.map(f => axios.get(`${ruleCompilerURL}/getRules/${f}`)))
-        const data = results.map(({data}) => data).reduce((a, b) => ({...a, ...b}))
-        setLoading(false)
-        setRules(data)
-        // console.log({data})
+  const fetchData = async () => {
+    const files = [
+      'N-rule1', 'N-rule2', 'N-rule3', 'N-rule4', 'N-rule5',
+      'N-rule6', 'N-rule7', 'N-rule8', 'N-rule9', 'N-rule10',
+    ]
+    try {
+      const results = await Promise.all(files.map(f => axios.get(`${ruleCompilerURL}/getRules/${f}`)))
+      const data = results.map(({data}) => data).reduce((a, b) => ({...a, ...b}))
+      setLoading(false)
+      setRules(data)
+      // console.log({data})
 
-        // createRuleN_CPP(results[0].data, 'N-rule1')
-        // createApplyN_CPP(results[0].data, 'N-rule1')
-        // createRuleN_Proto_h(results[0].data, 'N-rule1')
-        // createParseRule(results[0].data, 'N-rule1')
-        // create_rnameN_cpp(results[0].data, 'N-rule1')
-      } catch(e) {
-        console.log({e})
-      }
+      const dataByF = results
+        .map(({data}, idx) => ({[files[idx]]: data}))
+        .reduce((a, b) => ({...a, ...b}), {})
+
+      setRulesF(dataByF)
+    } catch(e) {
+      console.log({e})
     }
+  }
+
+  useEffect(() => {
     fetchData()
   }, [])
 
   const it = selected.keys()
   const sel1 = it.next().value
   const sel2 = it.next().value
-
-  // TODO Parse
-  // createParseRule_ID(rules['NP010'])
-  // createRuleNameTableElem(rules['NP043'])
-  // createParseRule()
 
   if(loading) return <Wrap>{'Loading...'}</Wrap>
 
@@ -174,9 +228,8 @@ const SearchRules = () => {
             <TitleBox>
               <ResultTitle>Selected Rule 1</ResultTitle>
               <ButtonBox2>
-                <Button2 onClick={() => {}}>Edit Rule</Button2>
-                <Button2 onClick={() => {}}>Update Rule</Button2>
-                <Button2 onClick={() => {}}>View Source</Button2>
+                <Button2 onClick={() => openUpdateRuleModal(rules[sel1])}>Edit Rule</Button2>
+                <Button2 onClick={() => openViewSrcModal(rules[sel1])}>View Source</Button2>
               </ButtonBox2>
             </TitleBox>
             <ContentBox>
@@ -185,9 +238,8 @@ const SearchRules = () => {
             <TitleBox>
               <ResultTitle>Selected Rule 2</ResultTitle>
               <ButtonBox2>
-                <Button2 onClick={() => {}}>Edit Rule</Button2>
-                <Button2 onClick={() => {}}>Update Rule</Button2>
-                <Button2 onClick={() => {}}>View Source</Button2>
+                <Button2 onClick={() => openUpdateRuleModal(rules[sel2])}>Edit Rule</Button2>
+                <Button2 onClick={() => openViewSrcModal(rules[sel2])}>View Source</Button2>
               </ButtonBox2>
             </TitleBox>
             <ContentBox>
@@ -195,6 +247,19 @@ const SearchRules = () => {
             </ContentBox>
         </ResultBoxR>
       </ResultWrap>
+      <RuleUpdateModal
+        modalFlag={updateRuleInfo.updateModalFlag}
+        closeModal={closeUpdateRuleModal}
+        targetRule={updateRuleInfo}
+        setUpdateRuleInfo={setUpdateRuleInfo}
+        onUpdateRuleReq={onUpdateRuleReq}
+      />
+      <ViewSourceModal
+        modalFlag={viewSrcInfo.viewSrcModalFlag}
+        closeModal={closeViewSrcModal}
+        targetRule={viewSrcInfo}
+        rulesF={rulesF}
+      />
     </Wrap>
   )
 }

@@ -50,5 +50,5 @@ const createApply = (rules, fno=1, num=1) => {
 
 export const createApplyN_CPP = (rules, fname) => {
   const applyN = createApply(rules, 1)
-  // console.log(applyN)
+  return applyN
 }

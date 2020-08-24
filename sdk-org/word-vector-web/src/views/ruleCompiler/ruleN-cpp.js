@@ -594,4 +594,5 @@ export const createRuleN_CPP = (rules, fname) => {
     ...res
   ].join('\n')
   // console.log(ret)
+  return ret
 }

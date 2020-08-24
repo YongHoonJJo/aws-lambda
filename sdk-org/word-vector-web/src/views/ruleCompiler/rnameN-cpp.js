@@ -26,5 +26,6 @@ export const create_rnameN_cpp = (rules, fname='N-rule1') => {
     ``
   ].join('\n')
 
-  console.log(ret)
+  // console.log(ret)
+  return ret
 }
