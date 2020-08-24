@@ -19,7 +19,7 @@ const sepRHSsConditions = RHSsCondi => {
       else { condi = `${condi}${s}` }
     }
   }
-  console.log({ret})
+  // console.log({ret})
   return ret
 }
 
@@ -35,7 +35,7 @@ const sepLHSAction = action => {
       if(!toOpen) { ret = `${ret}${s}` }
     }
   }
-  console.log({ret})
+  // console.log({ret})
   return ret
 }
 
@@ -127,7 +127,7 @@ const parseRhsCds = (rhs, condi) => {
 
 const createRhsRule = (ruleID, num, rhs, condi) => {
   if(condi === '') return
-  console.log({rhs, condi})
+  // console.log({rhs, condi})
   const rhsL = rhs.toLowerCase()
   const ret = [
     `Treenode${num}_ROOI* _PARSE_RULE::${ruleID}${rhsL}(Treenode${num}_ROOI* ${rhsL})`,
@@ -138,8 +138,8 @@ const createRhsRule = (ruleID, num, rhs, condi) => {
     `}`,
     ``
   ]
-  console.log(ret.join('\n'))
-  return ret
+  // console.log(ret.join('\n'))
+  return ret.join('\n')
 }
 
 /* Parse LSH Action */
@@ -573,26 +573,25 @@ const createLhsRule = (ruleID, RHSs, lhsAction, num) => {
     `\treturn x;`,
     `}`
   ]
-  console.log(ret.join('\n'))
+  // console.log(ret.join('\n'))
+  return ret.join('\n')
 }
 
 export const createRule = (rule, num=1) => {
   if(!rule) return
 
   const { ruleID, contents, LHS, RHSs, rhsConditions, lhsAction } = rule
-  // console.log({contents, rhsConditions, RHSs})
-  // console.log({LHS, lhsAction, RHSs})
-  const rets = RHSs.map(r => createRhsRule(ruleID, num, r, rhsConditions[r]))
-  console.log({lhsAction})
-  const ret2 = createLhsRule(ruleID, RHSs, lhsAction, num)
-  // return rets
+  const retR = RHSs.map(r => createRhsRule(ruleID, num, r, rhsConditions[r]))
+  const retL = createLhsRule(ruleID, RHSs, lhsAction, num)
+  return ['', ...retR, retL].join('\n')
 }
 
 export const createRuleN_CPP = (rules, fname) => {
-  // createRule(rules['AVP014'])
-  // createRule(rules['PP015'])
-  // createRule(rules['VP041'])
-  // createRule(rules['VP282'])
-  createRule(rules['NP107'])
-  // console.log({rules})
+  const keys = Object.keys(rules)
+  const res = keys.map(k => createRule(rules[k]))
+  const ret = [
+    `#include "ekmt-header.h"`, ,
+    ...res
+  ].join('\n')
+  // console.log(ret)
 }

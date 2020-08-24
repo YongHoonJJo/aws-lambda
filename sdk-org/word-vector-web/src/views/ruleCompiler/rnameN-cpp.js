@@ -1,29 +1,30 @@
 
 
-export const createRuleNameTableElem = (rule) => {
+const createRuleNameTableElem = (rule) => {
   if(!rule) return
 
-  const { ruleID } = rule
+  const { ruleID, RHSs } = rule
   const ruleIdL = ruleID.toLowerCase()
-  const ret = rule.RHSs.map(r => `${ruleIdL}-${r.toLowerCase()}`)
-  ret.push(ruleIdL)
+  const ret = RHSs.map(r => `"${ruleIdL}-${r.toLowerCase()}"`)
 
-  console.log({ret})
-
-  return ret
+  return [...ret, `"${ruleIdL}"`, ''].join(', ')
 }
 
-export const create_rnameN_cpp = (rules=[], fname='N-rule1') => {
+export const create_rnameN_cpp = (rules, fname='N-rule1') => {
 
-  const num = fname.split('rule')[1]
+  const fno = fname.split('rule')[1]
+
+  const keys = Object.keys(rules)
+  const elems = keys.map(k => createRuleNameTableElem(rules[k])).join('\n\t')
 
   const ret = [
     `#include "ekmt-header.h"`,
     ``,
-    `char* _PARSE_RULE::RuleNameTable${num}[ ] = {`,
-    ``,
+    `char* _PARSE_RULE::RuleNameTable${fno}[ ] = {`,
+    `\t${elems}`,
     `};`,
     ``
-  ]
+  ].join('\n')
 
+  console.log(ret)
 }

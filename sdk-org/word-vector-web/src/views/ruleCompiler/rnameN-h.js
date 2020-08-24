@@ -1,19 +1,31 @@
+import {createRule} from "./ruleN-cpp";
 
-export const createParseRule_ID = (rule) => {
+const ParseRuleID = (rule, enumS, idx) => {
   if(!rule) return
 
-  const { ruleID } = rule
+  const { ruleID, RHSs } = rule
   const ruleIdL = ruleID.toLowerCase()
-  const ret = rule.RHSs.map(r => `${ruleIdL}${r.toLowerCase()}`)
-  ret.push(ruleIdL)
+  const ret = RHSs.map(r => `${idx === 0 ? '\t' : ''}${ruleIdL}${r.toLowerCase()}${idx === 0 ? `=${enumS}` : ''}`)
 
-  return ret
+  return [...ret, ruleIdL, '']
 }
 
-export const createParseRule = (rules=[], fname='N-rule1') => {
+const parseRuleIDs = (rules, enumS) => {
+  const keys = Object.keys(rules)
+  const res = keys.map((k, idx) => ParseRuleID(rules[k], enumS, idx))
+  const cnt = res.reduce((a, b) => a + b.length, 0) - res.length
+  const ret = res.map(r => r.join(', ')).join('\n\t')
+  return [cnt, ret]
+}
 
-  const num = fname.split('rule')[1]
+export const createParseRule = (rules, fname='rule', num=1) => {
+
+  const fno = fname.split('rule')[1]
   // const parseRuleID = rules.map(r => createParseRule_ID(r))
+
+  const enumS = (fno-1)*300
+
+  const [cnt, enums] = parseRuleIDs(rules, enumS)
 
   const ret = [
     `#ifndef _H_RNAME${num}`,
@@ -25,14 +37,14 @@ export const createParseRule = (rules=[], fname='N-rule1') => {
     `extern int NumOfLongRemoveRules${num};`,
     ``,
     `enum ParseRule_ID${num} {`,
-    `\tnp010noun=0, np010,`,
+    `${enums}`,
     `};`,
     ``,
-    `#define MaxRuleNum${num} 146`,
+    `#define MaxRuleNum${num} ${cnt}`,
     ``,
     `#endif`,
     ``
-  ]
+  ].join('\n')
 
-  // console.log(ret.join('\n'))
+  console.log(ret)
 }

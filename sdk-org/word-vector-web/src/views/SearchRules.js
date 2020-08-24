@@ -6,11 +6,11 @@ import Radio from '../styles/Radio'
 
 import { ruleCompilerURL } from '../apis/api'
 
-import { createParseRule_ID, createParseRule } from './ruleCompiler/rnameN-h'
-import { createRuleNameTableElem } from './ruleCompiler/rnameN-cpp'
+import { createParseRule } from './ruleCompiler/rnameN-h'
 import { createRuleN_CPP } from './ruleCompiler/ruleN-cpp'
 import { createApplyN_CPP } from './ruleCompiler/applyN-cpp'
 import { createRuleN_Proto_h } from './ruleCompiler/ruleN-proto-h'
+import { create_rnameN_cpp } from './ruleCompiler/rnameN-cpp'
 
 const SearchRules = () => {
   const [rules, setRules] = useState({})
@@ -110,9 +110,12 @@ const SearchRules = () => {
         setLoading(false)
         setRules(data)
         // console.log({data})
+
         // createRuleN_CPP(results[0].data, 'N-rule1')
         // createApplyN_CPP(results[0].data, 'N-rule1')
         // createRuleN_Proto_h(results[0].data, 'N-rule1')
+        // createParseRule(results[0].data, 'N-rule1')
+        // create_rnameN_cpp(results[0].data, 'N-rule1')
       } catch(e) {
         console.log({e})
       }
