@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "aws-sdk": "^2.488.0",
-    "mocha": "^6.1.4",
+    "mocha": "^10.2.0",
     "serverless": "^1.46.1",
     "serverless-apigw-binary": "^0.4.4",
     "should": "^13.2.3",
